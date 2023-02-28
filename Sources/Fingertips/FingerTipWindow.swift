@@ -10,6 +10,7 @@ class FingerTipView: UIImageView {
     var fadingOut: Bool = false
 }
 
+@available(iOS 13.0, *)
 @objc (MBXFingerTipOverlayWindow)
 class FingerTipOverlayWindow: UIWindow {
     override var rootViewController: UIViewController? {
@@ -23,6 +24,7 @@ class FingerTipOverlayWindow: UIWindow {
     }
 }
 
+@available(iOS 13.0, *)
 @objc (MBXFingerTipWindow)
 public class FingerTipWindow: UIWindow {
 
@@ -76,7 +78,16 @@ public class FingerTipWindow: UIWindow {
     var overlayWindow: UIWindow {
         get {
             if _overlayWindow == nil {
-                _overlayWindow = FingerTipOverlayWindow(frame: frame)
+                if let scene = mainScene {
+                    if #available(iOS 13.0, *) {
+                        _overlayWindow = FingerTipOverlayWindow(windowScene: scene)
+                    } else {
+                        // Fallback on earlier versions
+                        _overlayWindow = FingerTipOverlayWindow(frame: frame)
+                    }
+                } else {
+                    _overlayWindow = FingerTipOverlayWindow(frame: frame)
+                }
                 _overlayWindow?.isUserInteractionEnabled = false
                 _overlayWindow?.windowLevel = UIWindow.Level.statusBar
                 _overlayWindow?.backgroundColor = .clear
@@ -90,12 +101,24 @@ public class FingerTipWindow: UIWindow {
             _overlayWindow = newValue
         }
     }
+    
+    private var mainScene: UIWindowScene?
+
+    
     var action: Bool?
     var fingerTipRemovalScheduled: Bool = false
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
+        commonInit()
+    }
+    
+    
+    @available(iOS 13.0, *)
+    override public init(windowScene: UIWindowScene) {
+        super.init(windowScene: windowScene)
+        mainScene = windowScene
         commonInit()
     }
 
