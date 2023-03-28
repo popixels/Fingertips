@@ -14,7 +14,7 @@ Pod::Spec.new do |f|
 
   f.platform = :ios, '5.0'
 
-  f.source_files = 'Sources/Fingertips/*.{h,m}'
+  f.source_files = 'Sources/Fingertips/*.swift'
 
   f.requires_arc = true
 
