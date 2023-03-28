@@ -33,9 +33,9 @@ public class FingerTipWindow: UIWindow {
     }
 
     public var touchAlpha: CGFloat         = 0.5
-    public var fadeDuration: TimeInterval  = 0.3
-    public var strokeColor: UIColor        = .black
-    public var fillColor: UIColor          = .white
+    public var fadeDuration: TimeInterval  = 0.4
+    public var strokeColor: UIColor        = .clear
+    public var fillColor: UIColor          = UIColor(red: 34.0/255.0, green: 34.0/255.0, blue: 32.0/255.0, alpha: 1.0)
 
     private var active: Bool = false
 
@@ -56,7 +56,7 @@ public class FingerTipWindow: UIWindow {
             UIGraphicsBeginImageContextWithOptions(clipPath.bounds.size, false, 0)
 
             let drawPath = UIBezierPath(arcCenter: CGPoint(x: 25, y: 25), radius: 22, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-            drawPath.lineWidth = 2
+            drawPath.lineWidth = 4.0
 
             strokeColor.setStroke()
             fillColor.setFill()
